@@ -1,0 +1,130 @@
+package netty.swing;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+/**
+ * Created by zhang on 15-1-30.
+ */
+public class Jtable {
+    private JTable table;
+    private JButton[] buttons;
+    public Jtable() {
+        JFrame f=new JFrame();
+
+        buttons = new JButton[5];
+        for(int i=0;i<buttons.length;i++){
+            buttons[i] = new JButton(""+i);
+        }
+
+        String[] columnNames = {"First Name",
+                "Last Name",
+                "Sport",
+
+                "Vegetarian"};
+
+        Object[][] data = {
+                {"Kathy", "Smith",
+                        "Snowboarding", buttons[0]},
+                {"John", "Doe",
+                        "Rowing", buttons[1]},
+                {"Sue", "Black",
+                        "Knitting",  buttons[2]},
+                {"Jane", "White",
+                        "Speed reading",buttons[3]},
+                {"Joe", "Brown",
+
+                        "Pool",buttons[4]}
+        };
+        JMenuBar MBar = new JMenuBar();
+        // 调用自行编写的buildFileMenu()方法来构造JMenu.
+        JMenu mfile = buildFileMenu();
+
+        MBar.add(mfile); // 将JMenu加入JMenuBar中.
+         table = new JTable(new MyTableModel(columnNames,data));
+        table.setDefaultRenderer(JButton.class, new ComboBoxCellRenderer());
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        table.setFillsViewportHeight(true);
+        setLookAndFeel();
+        f.getContentPane().add(scrollPane,BorderLayout.CENTER);
+        f.setTitle("Simple Table");
+        f.setJMenuBar(MBar);
+        f.setSize(600,600);
+        f.setVisible(true);
+
+        f.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
+    }
+
+    public JMenu buildFileMenu() {
+
+
+        JMenu thefile = new JMenu("File");
+        thefile.add("1");
+        thefile.add("退出").addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        // thefile.setIcon(new ImageIcon("icons/file.gif"));
+        return thefile;
+    }// end of buildFileMenu()
+
+    private void addHandler(){
+        //添加事件
+        table.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("table");
+                int row = table.getSelectedRow();
+                int column = table.getSelectedColumn();
+
+                System.out.println("row="+row+":"+"column="+column);
+                if(column==3){
+                    //处理button事件写在这里...
+                    System.out.println(((JButton)table.getValueAt(row, column)).getText());
+
+                }
+            }
+        });
+    }
+    public static void setLookAndFeel() {
+
+        Font font = new Font("JFrame", Font.PLAIN, 12);
+        try {
+            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e) {
+            System.out.println ("无法设置界面风格");
+        }
+         /*   Enumeration keys = UIManager.getLookAndFeelDefaults().keys();
+
+
+            while (keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                if (UIManager.get(key) instanceof Font) {
+                    UIManager.put(key, font);
+                }
+            }*/
+
+
+    }
+
+
+    public static void main(String[] a){
+
+ Jtable j=new Jtable();
+   j.addHandler();
+
+
+
+
+    }
+}
