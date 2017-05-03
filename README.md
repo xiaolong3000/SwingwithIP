@@ -1,4 +1,4 @@
-#简要介绍
+#简要介绍#
 使用了beautyeye_Inf.jar和poi-3.14.jar两个包，其中beautyeye_Inf.jar只是起美化作用，不是必须的。poi是Java读取Excel所必须的，同时运行的电脑上应安装有Excel。
 #效果展示
 打开后的界面<br>
