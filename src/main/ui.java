@@ -15,7 +15,15 @@ import isReach.*;
  * Created by Administrator on 2017/4/17 0017.
  */
 public class ui {
-
+     private static String getT(Boolean b){
+         String T="";
+              if(b==true){
+                  T="通";
+              }else{
+                  T="不通";
+              }
+              return T;
+     }
     public static void ManageView(){
 
         JFrame jFrame=new JFrame("SwingwithIP");
@@ -35,9 +43,12 @@ public class ui {
         };
 
         JTable jTable=new JTable(model);
-        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        //jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane pane=new JScrollPane(jTable);
+       // pane.setSize(400,500);
+
         JPanel jPanel=new JPanel();
         jPanel.add(opening);
 
@@ -66,7 +77,7 @@ public class ui {
                     String[][] getping=re.result(jFileChooser.getSelectedFile().getAbsolutePath());
                     int rowLength=getping.length;
                     for(int i=0;i<rowLength;i++){
-                        model.addRow(new String[]{getping[i][0],getping[i][1],""+new isReach().getReach(getping[i][0])});
+                        model.addRow(new String[]{getping[i][0],getping[i][1],getT(new isReach().getReach(getping[i][0]))});
                     }
 
 
